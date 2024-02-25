@@ -94,7 +94,7 @@ const FBConnectPage = () => {
       return (storedPageDetails ? JSON.parse(storedPageDetails).name : null);
     });
 
-    if (!accessToken) {
+    if (accessToken) {
       setIsConnected(true);
     } else {
       setIsConnected(false);
@@ -110,7 +110,7 @@ const FBConnectPage = () => {
       <Card>
         <div className={`flex flex-col items-center justify-center w-[300px] ${isConnected ? 'gap-0' : 'gap-6'}`}>
           <h1 className="font-semibold text-lg">Facebook Page Integration</h1>
-          {isConnected ? (
+          {!!isConnected ? (
             <>
               <p className="mb-5 mt-0 ">Integrated Page:<span className="font-semibold">
                 {integratedPageName}  </span></p>

@@ -202,6 +202,13 @@ const HelpDesk = () => {
   const handleChange = (event) => {
     setInputMessage(event.target.value);
   };
+  const handleLogout = () => {
+    localStorage.removeItem("FB_ACCESS_TOKEN");
+    localStorage.removeItem("FB_PAGE_ACCESS_TOKEN");
+    localStorage.removeItem("FB_PAGE_ID");
+    localStorage.removeItem("FB_PAGE_DETAILS");
+    window.location = '/connect';
+  }
 
 
   return (
@@ -223,7 +230,8 @@ const HelpDesk = () => {
         </ul>
         <div className="profile-container">
           <div className="profile-image">
-            <img src={img} alt="Profile" />
+            <img src={img} alt="Profile" onClick={handleLogout} />
+           
             <div className="status-dot"></div>
           </div>
         </div>
