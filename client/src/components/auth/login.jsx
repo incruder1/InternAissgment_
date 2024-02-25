@@ -8,13 +8,13 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+      const response = await fetch('https://internassigment.onrender.com/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const Login = () => {
           </label>
           <br /><label >
             <div id='check-box'>
-              <input  
+              <input
                 id="my-checkbox"
                 type="checkbox"
                 // checked={checked}
@@ -82,7 +82,7 @@ const Login = () => {
           <button type="submit" className="auth-button">
             Login
           </button>
-          
+
         </form>
         <p>
           Don't have an account? <Link to="/signup">Sign Up</Link>
@@ -93,7 +93,7 @@ const Login = () => {
         <div className="popup">
           <div className="popup-content">
             <p>{message}</p>
-            <button onClick={() => {setShowPopup(false); if(message === "login successfully"){navigate('/connect')}}}>OK</button>
+            <button onClick={() => { setShowPopup(false); if (message === "login successfully") { navigate('/connect') } }}>OK</button>
           </div>
         </div>
       )}

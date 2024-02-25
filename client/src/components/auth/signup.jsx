@@ -21,7 +21,7 @@ const SignUp = () => {
 
     try {
 
-      const res = await axios.post("http://localhost:8080/api/v1/auth/register", {
+      const res = await axios.post("https://internassigment.onrender.com/api/v1/auth/register", {
         email, password, name
       });
       if (res && res.data.success) {
@@ -72,7 +72,7 @@ const SignUp = () => {
           <br />
           <label >
             <div id='check-box'>
-              <input  
+              <input
                 id="my-checkbox"
                 type="checkbox"
                 checked={checked}

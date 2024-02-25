@@ -36,17 +36,17 @@ const FBConnectPage = () => {
       showSuccess(`Connected to Facebook page ${pageObj?.name}`);
 
       // send the pageObj to the backend so that Backend can work smoothly.
-      axios.post('http://localhost:8080/api/sendData', pageObj)
+      axios.post('https://internassigment.onrender.com/api/sendData', pageObj)
         .then(response => {
           console.log('Response from the backend:', response.data);
         })
         .catch(error => {
           console.error('Error:', error);
         });
-        const storedPageDetails = localStorage.getItem("FB_PAGE_DETAILS");
- setIntegratedPageName(()=>{
-  return (storedPageDetails ? JSON.parse(storedPageDetails).name : null);
- })
+      const storedPageDetails = localStorage.getItem("FB_PAGE_DETAILS");
+      setIntegratedPageName(() => {
+        return (storedPageDetails ? JSON.parse(storedPageDetails).name : null);
+      })
       setIsConnected(true);
     } catch (error) {
       setLoading(false);
@@ -90,9 +90,10 @@ const FBConnectPage = () => {
   const checkPageConnected = () => {
     const accessToken = localStorage.getItem("FB_ACCESS_TOKEN");
     const storedPageDetails = localStorage.getItem("FB_PAGE_DETAILS");
-    setIntegratedPageName(()=>{
-     return (storedPageDetails ? JSON.parse(storedPageDetails).name : null);});
-    
+    setIntegratedPageName(() => {
+      return (storedPageDetails ? JSON.parse(storedPageDetails).name : null);
+    });
+
     if (!accessToken) {
       setIsConnected(true);
     } else {
