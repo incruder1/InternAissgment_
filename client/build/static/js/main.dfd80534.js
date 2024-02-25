@@ -13072,7 +13072,7 @@
         (jn.HttpStatusCode = Pn),
         (jn.default = jn);
       const Tn = jn,
-        Rn = "http://localhost:3000/home",
+        Rn = "https://internassigment.onrender.com/home",
         Ln =
           {
             NODE_ENV: "production",
