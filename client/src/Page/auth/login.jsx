@@ -14,7 +14,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("https://internassigment.onrender.com//api/v1/auth/login", { email, password });
+      const res = await axios.post("https://internassigment.onrender.com/api/v1/auth/login", { email, password });
       console.log(res);
 
       if (res && res.data.success) {

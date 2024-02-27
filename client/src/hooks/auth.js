@@ -18,5 +18,5 @@ export const useAuth = create((set) => ({
     set({ userData: {} });
     set({ isLoggedIn: false });
   },
-  backend_url: "https://internassigment.onrender.com//",
+  backend_url: "https://internassigment.onrender.com/",
 }));

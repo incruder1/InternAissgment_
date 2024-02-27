@@ -20,7 +20,7 @@ const SignUp = () => {
 
     try {
 
-      const res = await axios.post("https://internassigment.onrender.com//api/v1/auth/register", {
+      const res = await axios.post("https://internassigment.onrender.com/api/v1/auth/register", {
         email, password, name
       });
       console.log(res);

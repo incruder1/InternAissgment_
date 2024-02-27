@@ -35,7 +35,7 @@ const FBConnectPage = () => {
       showSuccess(`Connected to Facebook page ${pageObj?.name}`);
 
       // send the pageObj to the backend so that Backend can work smoothly.
-      axios.post('https://internassigment.onrender.com//api/sendData', pageObj)
+      axios.post('https://internassigment.onrender.com/api/sendData', pageObj)
         .then(response => {
           console.log('Response from the backend:', response.data);
         })

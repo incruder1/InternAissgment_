@@ -36,7 +36,7 @@ const HelpDesk = () => {
   // console.log(chats);
   const fetchmess = async () => {
     try {
-      const response = await fetch('https://internassigment.onrender.com//api/getchat');
+      const response = await fetch('https://internassigment.onrender.com/api/getchat');
       const data = await response.json();
       for (const user of data.data) {
         const temp = (user.participants.data[0]);
@@ -69,7 +69,7 @@ const HelpDesk = () => {
     try {
       if (psid === '')
         return [];
-      const response = await fetch('https://internassigment.onrender.com//api/getchat');
+      const response = await fetch('https://internassigment.onrender.com/api/getchat');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

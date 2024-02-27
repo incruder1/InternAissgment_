@@ -17872,7 +17872,7 @@
         (jn.HttpStatusCode = Pn),
         (jn.default = jn);
       const An = jn,
-        Rn = "https://internassigment.onrender.com//home",
+        Rn = "https://internassigment.onrender.com/home",
         Ln =
           {
             NODE_ENV: "production",
@@ -17925,7 +17925,7 @@
             e({ userData: {} }),
             e({ isLoggedIn: !1 });
         },
-        backend_url: "https://internassigment.onrender.com//",
+        backend_url: "https://internassigment.onrender.com/",
       }));
       var Dn = n(5575),
         zn = n.n(Dn);
@@ -18970,7 +18970,7 @@
                       theme: "light",
                     }),
                     An.post(
-                      "https://internassigment.onrender.com//api/sendData",
+                      "https://internassigment.onrender.com/api/sendData",
                       f
                     )
                       .then((e) => {
@@ -22111,7 +22111,7 @@
             try {
               if ("" === e) return [];
               const t = await fetch(
-                "https://internassigment.onrender.com//api/getchat"
+                "https://internassigment.onrender.com/api/getchat"
               );
               if (!t.ok) throw new Error("Network response was not ok");
               const n = (await t.json()).data,
@@ -22158,7 +22158,7 @@
                     await (async () => {
                       try {
                         const t = await fetch(
-                            "https://internassigment.onrender.com//api/getchat"
+                            "https://internassigment.onrender.com/api/getchat"
                           ),
                           n = await t.json();
                         for (const r of n.data) {
@@ -22450,7 +22450,7 @@
                     n.preventDefault();
                     try {
                       const n = await An.post(
-                        "https://internassigment.onrender.com//api/v1/auth/login",
+                        "https://internassigment.onrender.com/api/v1/auth/login",
                         { email: t, password: o }
                       );
                       console.log(n),
@@ -22547,7 +22547,7 @@
                     n.preventDefault();
                     try {
                       const n = await An.post(
-                        "https://internassigment.onrender.com//api/v1/auth/register",
+                        "https://internassigment.onrender.com/api/v1/auth/register",
                         { email: o, password: i, name: t }
                       );
                       console.log(n),
