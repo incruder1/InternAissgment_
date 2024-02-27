@@ -1,44 +1,32 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import axios from 'axios';
 import './authPage.styles.css';
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [showPopup, setShowPopup] = useState(false);
 
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://internassigment.onrender.com/api/v1/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      });
+      const res = await axios.post("http://localhost:8080/api/v1/auth/login", { email, password });
+      console.log(res);
 
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('jwtToken', data.token);
-        setShowPopup(true);
-        setMessage(data.message);
+      if (res && res.data.success) {
+        toast.success(res.data && res.data.message,{position: "bottom-center"});
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate("/connect");
       } else {
-        const messageData = await response.json();
-        setMessage(messageData.message || 'Authentication failed');
-        setShowPopup(true);
+        toast.error(res.data.message);
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      setMessage('Internal Server Error');
-      setShowPopup(true);
+      console.log(error);
+      toast.error("Something went wrong",{position: "bottom-center"});
     }
   };
 
@@ -71,14 +59,11 @@ const Login = () => {
               <input
                 id="my-checkbox"
                 type="checkbox"
-                // checked={checked}
-                // onChange={handleChange}
                 required
               /> Remember me
             </div>
           </label>
           <br />
-          {message && <p className="error-message">{message}</p>}
           <button type="submit" className="auth-button">
             Login
           </button>
@@ -89,14 +74,7 @@ const Login = () => {
         </p>
       </div>
 
-      {showPopup && (
-        <div className="popup">
-          <div className="popup-content">
-            <p>{message}</p>
-            <button onClick={() => { setShowPopup(false); if (message === "login successfully") { navigate('/connect') } }}>OK</button>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 };

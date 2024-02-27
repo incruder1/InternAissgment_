@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Card from "./CommonComponents/Card";
-import Button from "./CommonComponents/Button";
+import Card from "../components/CommonComponents/Card";
+import Button from "../components/CommonComponents/Button";
 import { useAuth } from "../hooks/auth";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { GraphApi } from "../Api/Axios";
-import { showError, showSuccess } from "../lib/utils";
+import { showError, showSuccess } from "../lib/utils.js";
 import axios from 'axios';
 import { Link } from "react-router-dom";
 const FBConnectPage = () => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [integratedPageName, setIntegratedPageName] = useState(false);
-  const auth = useAuth();
-
+  const auth = useAuth(); 
   const facebookAppID = 735852345279671;
   // const facebookRedirectURI = import.meta.VITE_PUBLIC_URL_ENCODED;
 
@@ -22,7 +21,7 @@ const FBConnectPage = () => {
       const res = await GraphApi.get("/me/accounts", {
         params: { access_token: accessToken },
       });
-      console.log(res);
+      
       const pageObj = {
         name: res?.data?.data[0]?.name,
         id: res?.data?.data[0]?.id,
@@ -36,7 +35,7 @@ const FBConnectPage = () => {
       showSuccess(`Connected to Facebook page ${pageObj?.name}`);
 
       // send the pageObj to the backend so that Backend can work smoothly.
-      axios.post('https://internassigment.onrender.com/api/sendData', pageObj)
+      axios.post('http://localhost:8080/api/sendData', pageObj)
         .then(response => {
           console.log('Response from the backend:', response.data);
         })
@@ -64,7 +63,7 @@ const FBConnectPage = () => {
       if (data.accessToken) {
         const accessToken = data.accessToken;
         localStorage.setItem("FB_ACCESS_TOKEN", accessToken);
-        console.log(accessToken);
+        // console.log(accessToken);
         await getPageId(accessToken);
       }
     } catch (error) {

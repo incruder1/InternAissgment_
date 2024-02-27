@@ -8,6 +8,7 @@ import { useLoader } from "../hooks/loader";
 import CustomerInformation from "./CustomerInformation";
 import Button from "./CommonComponents/Button";
 import axios from "axios";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const SelfMessage = ({ chat }) => {
   return (
@@ -307,8 +308,7 @@ const ChatPortal = () => {
           access_token: pageAccessToken,
         },
       });
-
-      // console.log(res);
+ 
 
       let convPromises = res?.data?.data?.map((conv) => {
         return GraphApi.get(`/${conv?.id}/messages`, {
@@ -353,8 +353,7 @@ const ChatPortal = () => {
         });
         chatsLocal.push(__chats);
       });
-      setChats(chatsLocal);
-      // console.log(chatsLocal);
+      setChats(chatsLocal); 
       setSelectedChat(null);
     } catch (error) {
       loader.setLoading(false);
@@ -393,27 +392,15 @@ const ChatPortal = () => {
 
   const joinChat = (senderId) => {
     const payload = { action: "join-chat", sender: senderId };
-    // socketRef.current.send(JSON.stringify(payload));
   };
 
-  useEffect(() => {
-    if (selectedChat?.length) {
-      let ENDPOINT = import.meta.env.VITE_SOCKET_ENDPOINT;
-      // console.log(ENDPOINT);
-      let senderId = selectedChat[0]?.sender?.id;
-      // console.log(senderId);
+  // useEffect(() => {
+  //   if (selectedChat?.length) {
+  //     let ENDPOINT = import.meta.env.VITE_SOCKET_ENDPOINT;
+  //     let senderId = selectedChat[0]?.sender?.id;
 
-      // socketRef.current = new WebSocket(ENDPOINT);
-      // socketRef.current.onopen = () => {
-      //   joinChat(senderId);
-      // };
-      // socketRef.current.onmessage = (res) => {
-      //   // const payload = JSON.parse(res.data);
-      //   // const route = payload.action;
-      //   console.log("Message received finally 🥹");
-      // };
-    }
-  }, [selectedChat]);
+  //   }
+  // }, [selectedChat]);
 
   return (
     <div className="flex w-full justify-between overflow-hidden">

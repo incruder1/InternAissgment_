@@ -1,25 +1,28 @@
 // ChatApp.js
-import React, { useState } from "react";
-import { ReactComponent as MailBox } from '../assets/inbox-alt-1-svgrepo-com.svg'
-import { ReactComponent as Connection } from "../assets/share-circle-network-connection-social-svgrepo-com.svg";
-import { ReactComponent as Friend } from "../assets/user-friends-svgrepo-com.svg";
-import { ReactComponent as Graph } from "../assets/graph-increase-svgrepo-com.svg";
+import React, { useState, useEffect } from "react";
 import img from "../assets/my photo 2.jpg";
 import img1 from "../assets/align-left_10654774.png"
 import pic from "../assets/picture.jpg";
 import { ReactComponent as RefreshIcon } from "../assets/refresh-svgrepo-com.svg";
 import { ReactComponent as CallIcon } from "../assets/call-alt-svgrepo-com.svg";
 import { ReactComponent as ProfileIcon } from "../assets/user-profile-avatar-svgrepo-com.svg";
-import AllMessages from "./AllMessages";
-import { CHATS } from "../chats-data";
+
+import ScrollToBottom from 'react-scroll-to-bottom';
+import AllMessages from "../components/AllMessages.jsx";
+import { CHATS } from "../chats-data.js";
 import './Helpdesk.styles.css'
-import Chats from "./chats";
-import axios from "axios";
+import Chats from "../components/chats.jsx";
+import axios from "axios";  
+import FirstComponent from "../components/firstComponent.jsx";
+// import SecondComponent from "../components/secondComponent.jsx";
 let DATA = [];
 const HelpDesk = () => {
-  const [message, setMessage] = useState(DATA);
-  const [chats, setChats] = useState(CHATS);
-  const [messages, setMessages] = useState([]);
+   
+  const [message, setMessage] = useState([]);
+  const [chats, setChats] = useState([]);
+  const [messages, setMessages] = useState([]); 
+  const [isMessageSent, setIsMessageSent] = useState(false);
+  const [activeMessageIndex, setActiveMessageIndex] = useState(null);
   const [inputMessage, setInputMessage] = useState('');
   const [pid, setPid] = useState('');
   const [name, setName] = useState('');
@@ -27,15 +30,16 @@ const HelpDesk = () => {
   const [email, setEmail] = useState('');
   const [fName, setFName] = useState('');
   const [lName, setLName] = useState('');
-
+  const myId = localStorage.getItem("FB_PAGE_ID");
+  const [isRender, setIsRender] = useState(false);
+  // const [chatsKey, setChatsKey] = useState(0);
+  // console.log(chats);
   const fetchmess = async () => {
     try {
-      const response = await fetch('https://internassigment.onrender.com/api/getchat');
+      const response = await fetch('http://localhost:8080/api/getchat');
       const data = await response.json();
-      for (const user of data.data) {
+     for (const user of data.data) {
         const temp = (user.participants.data[0]);
-
-        console.log(user.participants);
         const newObj = {
           id: temp.id,
           name: temp.name,
@@ -46,11 +50,12 @@ const HelpDesk = () => {
           text: 'Yeah Sure, It is available in the store. You can visit the store and get it.'
         };
 
-        const isDistinct = !DATA.some(obj => obj.id === newObj.id);
+        const isDistinct = !message.some(obj => obj.id === newObj.id);
 
         if (isDistinct) {
-          DATA.push(newObj);
+          message.push(newObj);
         }
+        setIsRender(true);
       }
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -60,19 +65,11 @@ const HelpDesk = () => {
       console.error('Error fetching data:', error);
     }
   };
-
-  fetchmess();
-
-  const myId = localStorage.getItem("FB_PAGE_ID");
-  console.log("myid", myId);
-
   async function fetchData(psid) {
     try {
-      // console.log("Here is the PID", psid);
-
       if (psid === '')
         return [];
-      const response = await fetch('https://internassigment.onrender.com/api/getchat');
+      const response = await fetch('http://localhost:8080/api/getchat');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -82,7 +79,7 @@ const HelpDesk = () => {
 
 
       const getMessagesForParticipant = async (participantId) => {
-        console.log("jahy", participantId);
+        
 
         const participantData = await data.find(item =>
           item.participants.data.some(participant => participant.id === participantId)
@@ -104,10 +101,11 @@ const HelpDesk = () => {
 
       console.log(dm_messages1);
       setChats(dm_messages1);
-
+      
     } catch (error) {
       // Handle errors
       console.error('There was a problem with the fetch operation:', error);
+      
     }
   }
 
@@ -125,8 +123,6 @@ const HelpDesk = () => {
     return `${formattedDate}, ${formattedTime}`;
   }
 
-
-  const [activeMessageIndex, setActiveMessageIndex] = useState(null);
   const handleSetActiveMessage = (index, psid) => {
     setActiveMessageIndex(index); // Set the active message index
     fetchData(psid);
@@ -198,6 +194,7 @@ const HelpDesk = () => {
       setInputMessage(''); // Clear the input field after submission
     }
   };
+ 
 
   const handleChange = (event) => {
     setInputMessage(event.target.value);
@@ -209,52 +206,54 @@ const HelpDesk = () => {
     localStorage.removeItem("FB_PAGE_DETAILS");
     window.location = '/connect';
   }
+  useEffect(() => {
+    const fetchDate = async () => {
+      try {
+        await fetchmess();
+        // Other logic after fetchmess completes
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    console.log("rendered ");
+    fetchDate();
+  }, [0]);
+  useEffect(() => {
+    
+    const handleMessage = async () => {
+      try {
+       
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    console.log("rendered ");
+    handleMessage();
+  }, []);
 
 
   return (
     <div className="container">
-      <div className="nav-container">
-        <ul className="nav-tabs">
-          <li className={navActiveTab === 'connection' ? 'active-nav' : ''} onClick={() => handleNavTabClick('connection')}>
-            <a href="#"><Connection /></a>
-          </li>
-          <li className={navActiveTab === 'mailbox' ? 'active-nav' : ''} onClick={() => handleNavTabClick('mailbox')}>
-            <a href="#"><MailBox /></a>
-          </li>
-          <li className={navActiveTab === 'friend' ? 'active-nav' : ''} onClick={() => handleNavTabClick('friend')}>
-            <a href="#"><Friend /></a>
-          </li>
-          <li className={navActiveTab === 'graph' ? 'active-nav' : ''} onClick={() => handleNavTabClick('graph')}>
-            <a href="#"><Graph /></a>
-          </li>
-        </ul>
-        <div className="profile-container">
-          <div className="profile-image">
-            <img src={img} alt="Profile" onClick={handleLogout} />
-           
-            <div className="status-dot"></div>
-          </div>
-        </div>
-      </div>
+        <FirstComponent />
       <div className="secondComponent">
         <div className="header">
           <div className="left_content">
             <img src={img1} alt="Menu" className="menu-icon" />
             <span className="conversation">Conversation</span>
           </div>
-          <RefreshIcon className="refresh-icon" />
+          <RefreshIcon className="refresh-icon pt-1" />
         </div>
         <div className="divider"></div>
-        {message.map((data, index) => (<div onClick={() => handleSetActiveMessage(index, data.id)}><AllMessages name={data.name} type={data.type} time={data.time} heading={data.heading} text={data.text} isActive={index === activeMessageIndex} updatename={updname} email={data.email} /> </div>))}
+        {isRender && message.map((data, index) => (<div onClick={() => handleSetActiveMessage(index, data.id)}><AllMessages name={data.name} type={data.type} time={data.time} heading={data.heading} text={data.text} isActive={index === activeMessageIndex} updatename={updname} email={data.email} /> </div>))}
       </div>
       <div className="thirdComponent">
         <div className="header">
           <span className="chat-heading font-bold">Chat</span>
         </div>
         <div className="divider"></div>
-        <div className="chats">
-          {chats.map(data => (<Chats name={data.from?.name} time={convertGMTtoIST(data.created_time)} text={data.message} img={pic} myChat={data.from?.id === myId} />))}
-        </div>
+        <ScrollToBottom className="chats">
+          {chats.map(data => (<Chats key={data.id} name={data.from?.name} time={convertGMTtoIST(data.created_time)} text={data.message} img={pic} myChat={data.from?.id === myId} />))}
+        </ScrollToBottom>
         <div className="input-area"><input type="text" name="" id="input-area" placeholder="Message" onKeyDown={handleKeyDown} onChange={handleChange}
         /></div>
       </div>
