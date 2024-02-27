@@ -11,7 +11,7 @@ const FBConnectPage = () => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [integratedPageName, setIntegratedPageName] = useState(false);
-  const auth = useAuth(); 
+  const auth = useAuth();
   const facebookAppID = 735852345279671;
   // const facebookRedirectURI = import.meta.VITE_PUBLIC_URL_ENCODED;
 
@@ -21,7 +21,7 @@ const FBConnectPage = () => {
       const res = await GraphApi.get("/me/accounts", {
         params: { access_token: accessToken },
       });
-      
+
       const pageObj = {
         name: res?.data?.data[0]?.name,
         id: res?.data?.data[0]?.id,
@@ -35,7 +35,7 @@ const FBConnectPage = () => {
       showSuccess(`Connected to Facebook page ${pageObj?.name}`);
 
       // send the pageObj to the backend so that Backend can work smoothly.
-      axios.post('http://localhost:8080/api/sendData', pageObj)
+      axios.post('https://internassigment.onrender.com//api/sendData', pageObj)
         .then(response => {
           console.log('Response from the backend:', response.data);
         })

@@ -1,8 +1,8 @@
 import axios from "axios";
 // const baseURL = import.meta.env.VITE_API_URL || window.API_URL;
-const baseURL = "http://localhost:8080/home";
+const baseURL = "https://internassigment.onrender.com//home";
 
-const graphURL = process.env.GRAPH_URL|| "https://graph.facebook.com/v11.0";
+const graphURL = process.env.GRAPH_URL || "https://graph.facebook.com/v11.0";
 
 let GraphApi = axios.create({
   baseURL: graphURL,

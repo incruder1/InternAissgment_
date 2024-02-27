@@ -12,15 +12,15 @@ import AllMessages from "../components/AllMessages.jsx";
 import { CHATS } from "../chats-data.js";
 import './Helpdesk.styles.css'
 import Chats from "../components/chats.jsx";
-import axios from "axios";  
+import axios from "axios";
 import FirstComponent from "../components/firstComponent.jsx";
 // import SecondComponent from "../components/secondComponent.jsx";
 let DATA = [];
 const HelpDesk = () => {
-   
+
   const [message, setMessage] = useState([]);
   const [chats, setChats] = useState([]);
-  const [messages, setMessages] = useState([]); 
+  const [messages, setMessages] = useState([]);
   const [isMessageSent, setIsMessageSent] = useState(false);
   const [activeMessageIndex, setActiveMessageIndex] = useState(null);
   const [inputMessage, setInputMessage] = useState('');
@@ -36,9 +36,9 @@ const HelpDesk = () => {
   // console.log(chats);
   const fetchmess = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/getchat');
+      const response = await fetch('https://internassigment.onrender.com//api/getchat');
       const data = await response.json();
-     for (const user of data.data) {
+      for (const user of data.data) {
         const temp = (user.participants.data[0]);
         const newObj = {
           id: temp.id,
@@ -69,7 +69,7 @@ const HelpDesk = () => {
     try {
       if (psid === '')
         return [];
-      const response = await fetch('http://localhost:8080/api/getchat');
+      const response = await fetch('https://internassigment.onrender.com//api/getchat');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -79,7 +79,7 @@ const HelpDesk = () => {
 
 
       const getMessagesForParticipant = async (participantId) => {
-        
+
 
         const participantData = await data.find(item =>
           item.participants.data.some(participant => participant.id === participantId)
@@ -101,11 +101,11 @@ const HelpDesk = () => {
 
       console.log(dm_messages1);
       setChats(dm_messages1);
-      
+
     } catch (error) {
       // Handle errors
       console.error('There was a problem with the fetch operation:', error);
-      
+
     }
   }
 
@@ -194,7 +194,7 @@ const HelpDesk = () => {
       setInputMessage(''); // Clear the input field after submission
     }
   };
- 
+
 
   const handleChange = (event) => {
     setInputMessage(event.target.value);
@@ -219,10 +219,10 @@ const HelpDesk = () => {
     fetchDate();
   }, [0]);
   useEffect(() => {
-    
+
     const handleMessage = async () => {
       try {
-       
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -234,7 +234,7 @@ const HelpDesk = () => {
 
   return (
     <div className="container">
-        <FirstComponent />
+      <FirstComponent />
       <div className="secondComponent">
         <div className="header">
           <div className="left_content">

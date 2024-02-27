@@ -15,12 +15,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    uploadedImages: [
-      {
-        imageUrl: String,
-        // uploadedBy: String,
-        timestamp: { type: Date, default: Date.now },
-      },],
   },
   { timestamps: true }
 );

@@ -14,11 +14,11 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:8080/api/v1/auth/login", { email, password });
+      const res = await axios.post("https://internassigment.onrender.com//api/v1/auth/login", { email, password });
       console.log(res);
 
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message,{position: "bottom-center"});
+        toast.success(res.data && res.data.message, { position: "bottom-center" });
         localStorage.setItem("auth", JSON.stringify(res.data));
         navigate("/connect");
       } else {
@@ -26,7 +26,7 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong",{position: "bottom-center"});
+      toast.error("Something went wrong", { position: "bottom-center" });
     }
   };
 

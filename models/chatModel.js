@@ -1,14 +1,24 @@
 import mongoose from "mongoose";
-const ChatSchema = new mongoose.Schema({
-  id : String,
-  name : String,
-  email : String,
-  messages: [{
-    sender_id : String,
-    sender_name : String,
-    message : String,
-    created_time : String,
-  }],
+const conversationSchema = new mongoose.Schema({
+  pageId: String, 
+  conversationId: String, 
+  messages: [
+    { 
+      message: String,
+      id: String,
+      created_time:String,
+      from: mongoose.Schema.Types.Mixed,
+      to: mongoose.Schema.Types.Mixed,
+    },
+  ],
+  participants:[
+      {
+        email: String,
+        name: String,
+        id: String
+      }
+  ]
 });
 
-export default mongoose.model("Chat", ChatSchema);
+export default mongoose.model("Conversation", conversationSchema);
+ 

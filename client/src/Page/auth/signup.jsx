@@ -20,19 +20,19 @@ const SignUp = () => {
 
     try {
 
-      const res = await axios.post("http://localhost:8080/api/v1/auth/register", {
+      const res = await axios.post("https://internassigment.onrender.com//api/v1/auth/register", {
         email, password, name
       });
       console.log(res);
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message,{position: "bottom-center"});
+        toast.success(res.data && res.data.message, { position: "bottom-center" });
         navigate("/");
       } else {
-        toast.error(res.data.message,{position: "bottom-center"});
+        toast.error(res.data.message, { position: "bottom-center" });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong",{position: "bottom-center"});
+      toast.error("Something went wrong", { position: "bottom-center" });
     }
   };
   return (
@@ -82,7 +82,7 @@ const SignUp = () => {
             </div>
           </label>
           <br />
-          
+
           <button type="submit" className="auth-button">
             Sign Up
           </button>
